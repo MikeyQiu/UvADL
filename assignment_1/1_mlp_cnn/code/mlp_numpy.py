@@ -37,7 +37,14 @@ class MLP(object):
         ########################
         # PUT YOUR CODE HERE  #
         #######################
-        raise NotImplementedError
+        self.n_inputs=n_inputs
+        self.n_hidden=n_hidden
+        self.n_classes=n_classes
+        self.depth=len(n_inputs)
+        self.softmax_module=SoftMaxModule
+        self.elu_module=ELUModule
+
+        #raise NotImplementedError
         ########################
         # END OF YOUR CODE    #
         #######################
@@ -59,7 +66,16 @@ class MLP(object):
         ########################
         # PUT YOUR CODE HERE  #
         #######################
-        raise NotImplementedError
+        input=x
+        for i in range(self.depth):
+            self.linear_module = LinearModule(input,self.n_hidden[i])
+            l_temp = self.linear_module.forward(input)
+            h_temp = self.elu_module.forward(l_temp)
+            input=h_temp
+
+        out=self.softmax_module.forward(input)
+
+        #raise NotImplementedError
         ########################
         # END OF YOUR CODE    #
         #######################
@@ -80,7 +96,13 @@ class MLP(object):
         ########################
         # PUT YOUR CODE HERE  #
         #######################
-        raise NotImplementedError
+        #raise NotImplementedError
+        dx = self.softmax_module.backward(dout)
+        for i in range(self.depth, 0, -1):
+            self.linear_module = LinearModule(dx, self.n_hidden[i])
+            h_temp = self.elu_module.backward(dx)
+            l_temp = self.linear_module.backward(h_temp)
+            dx = l_temp
         ########################
         # END OF YOUR CODE    #
         #######################

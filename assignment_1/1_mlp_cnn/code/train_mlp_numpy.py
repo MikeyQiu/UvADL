@@ -47,7 +47,17 @@ def accuracy(predictions, targets):
     ########################
     # PUT YOUR CODE HERE  #
     #######################
-    raise NotImplementedError
+    T=0
+    F=0
+    for i in range(len(predictions)):
+        for j in range(len(predictions[0])):
+            if predictions[i][j]==targets[i][j]:
+                T+=1
+            else:
+                F+=1
+    accuracy=T/(T+F)
+
+    #raise NotImplementedError
     ########################
     # END OF YOUR CODE    #
     #######################
@@ -78,7 +88,14 @@ def train():
     ########################
     # PUT YOUR CODE HERE  #
     #######################
-    raise NotImplementedError
+    OUTPUT=10
+    crossEntropyModule=CrossEntropyModule()
+    for i in range(MAX_STEPS_DEFAULT):
+        mlp=MLP(BATCH_SIZE_DEFAULT,dnn_hidden_units,10)
+        softmax_out=mlp.forward(BATCH_SIZE_DEFAULT)
+        forward_loss=crossEntropyModule.forward(softmax_out,)
+        mlp.backward(forward_out)
+    #raise NotImplementedError
     ########################
     # END OF YOUR CODE    #
     #######################
